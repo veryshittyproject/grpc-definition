@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package="./api";
+
+service API {
+  rpc Motd (MotdRequest) returns (MotdResponse);
+}
+
+message MotdRequest {}
+
+message MotdResponse {
+  string message = 1;
+}
