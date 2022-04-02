@@ -1,4 +1,4 @@
-module api
+module github.com/veryshittyproject/grpc-definition
 
 go 1.18
 
