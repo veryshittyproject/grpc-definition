@@ -1,13 +1,58 @@
 syntax = "proto3";
 
-option go_package="./api";
+option go_package = "./api";
+
+message UUID {
+  string value = 1;
+}
+
+message User {
+  UUID id = 1;
+  string email = 4;
+  string username = 5;
+  string first_name = 6;
+  string last_name = 7;
+  string description = 8;
+}
 
 service API {
   rpc Motd (MotdRequest) returns (MotdResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);
 }
 
 message MotdRequest {}
 
 message MotdResponse {
   string message = 1;
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  User user = 1;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  User user = 1;
+}
+
+message UpdateProfileRequest {
+  optional string username = 1;
+  optional string first_name = 2;
+  optional string last_name = 3;
+  optional string description = 4;
+}
+
+message UpdateProfileResponse {
+  User new_user = 1;
 }
