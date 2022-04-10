@@ -14,208 +14,208 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AuthClient is the client API for Auth service.
+// AuthServiceClient is the client API for AuthService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthClient interface {
+type AuthServiceClient interface {
 	LoginTelegramDetails(ctx context.Context, in *LoginTelegramDetailsRequest, opts ...grpc.CallOption) (*LoginTelegramDetailsResponse, error)
 	LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error)
 }
 
-type authClient struct {
+type authServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthClient(cc grpc.ClientConnInterface) AuthClient {
-	return &authClient{cc}
+func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
+	return &authServiceClient{cc}
 }
 
-func (c *authClient) LoginTelegramDetails(ctx context.Context, in *LoginTelegramDetailsRequest, opts ...grpc.CallOption) (*LoginTelegramDetailsResponse, error) {
+func (c *authServiceClient) LoginTelegramDetails(ctx context.Context, in *LoginTelegramDetailsRequest, opts ...grpc.CallOption) (*LoginTelegramDetailsResponse, error) {
 	out := new(LoginTelegramDetailsResponse)
-	err := c.cc.Invoke(ctx, "/Auth/LoginTelegramDetails", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/AuthService/LoginTelegramDetails", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error) {
+func (c *authServiceClient) LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error) {
 	out := new(LoginTelegramResponse)
-	err := c.cc.Invoke(ctx, "/Auth/LoginTelegram", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/AuthService/LoginTelegram", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthServer is the server API for Auth service.
-// All implementations must embed UnimplementedAuthServer
+// AuthServiceServer is the server API for AuthService service.
+// All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
-type AuthServer interface {
+type AuthServiceServer interface {
 	LoginTelegramDetails(context.Context, *LoginTelegramDetailsRequest) (*LoginTelegramDetailsResponse, error)
 	LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error)
-	mustEmbedUnimplementedAuthServer()
+	mustEmbedUnimplementedAuthServiceServer()
 }
 
-// UnimplementedAuthServer must be embedded to have forward compatible implementations.
-type UnimplementedAuthServer struct {
+// UnimplementedAuthServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedAuthServiceServer struct {
 }
 
-func (UnimplementedAuthServer) LoginTelegramDetails(context.Context, *LoginTelegramDetailsRequest) (*LoginTelegramDetailsResponse, error) {
+func (UnimplementedAuthServiceServer) LoginTelegramDetails(context.Context, *LoginTelegramDetailsRequest) (*LoginTelegramDetailsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginTelegramDetails not implemented")
 }
-func (UnimplementedAuthServer) LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error) {
+func (UnimplementedAuthServiceServer) LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginTelegram not implemented")
 }
-func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
+func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
-// UnsafeAuthServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthServer will
+// UnsafeAuthServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AuthServiceServer will
 // result in compilation errors.
-type UnsafeAuthServer interface {
-	mustEmbedUnimplementedAuthServer()
+type UnsafeAuthServiceServer interface {
+	mustEmbedUnimplementedAuthServiceServer()
 }
 
-func RegisterAuthServer(s grpc.ServiceRegistrar, srv AuthServer) {
-	s.RegisterService(&Auth_ServiceDesc, srv)
+func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
+	s.RegisterService(&AuthService_ServiceDesc, srv)
 }
 
-func _Auth_LoginTelegramDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthService_LoginTelegramDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LoginTelegramDetailsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).LoginTelegramDetails(ctx, in)
+		return srv.(AuthServiceServer).LoginTelegramDetails(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Auth/LoginTelegramDetails",
+		FullMethod: "/AuthService/LoginTelegramDetails",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).LoginTelegramDetails(ctx, req.(*LoginTelegramDetailsRequest))
+		return srv.(AuthServiceServer).LoginTelegramDetails(ctx, req.(*LoginTelegramDetailsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_LoginTelegram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthService_LoginTelegram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LoginTelegramRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).LoginTelegram(ctx, in)
+		return srv.(AuthServiceServer).LoginTelegram(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Auth/LoginTelegram",
+		FullMethod: "/AuthService/LoginTelegram",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).LoginTelegram(ctx, req.(*LoginTelegramRequest))
+		return srv.(AuthServiceServer).LoginTelegram(ctx, req.(*LoginTelegramRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
+// AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Auth_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Auth",
-	HandlerType: (*AuthServer)(nil),
+var AuthService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "AuthService",
+	HandlerType: (*AuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "LoginTelegramDetails",
-			Handler:    _Auth_LoginTelegramDetails_Handler,
+			Handler:    _AuthService_LoginTelegramDetails_Handler,
 		},
 		{
 			MethodName: "LoginTelegram",
-			Handler:    _Auth_LoginTelegram_Handler,
+			Handler:    _AuthService_LoginTelegram_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "veryshittyproject.proto",
 }
 
-// UsersServiceClient is the client API for UsersService service.
+// UserServiceClient is the client API for UserService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UsersServiceClient interface {
+type UserServiceClient interface {
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 }
 
-type usersServiceClient struct {
+type userServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUsersServiceClient(cc grpc.ClientConnInterface) UsersServiceClient {
-	return &usersServiceClient{cc}
+func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
+	return &userServiceClient{cc}
 }
 
-func (c *usersServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+func (c *userServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
 	out := new(GetUserResponse)
-	err := c.cc.Invoke(ctx, "/UsersService/GetUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/UserService/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UsersServiceServer is the server API for UsersService service.
-// All implementations must embed UnimplementedUsersServiceServer
+// UserServiceServer is the server API for UserService service.
+// All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
-type UsersServiceServer interface {
+type UserServiceServer interface {
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	mustEmbedUnimplementedUsersServiceServer()
+	mustEmbedUnimplementedUserServiceServer()
 }
 
-// UnimplementedUsersServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedUsersServiceServer struct {
+// UnimplementedUserServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedUserServiceServer struct {
 }
 
-func (UnimplementedUsersServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
+func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUsersServiceServer) mustEmbedUnimplementedUsersServiceServer() {}
+func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
-// UnsafeUsersServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UsersServiceServer will
+// UnsafeUserServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserServiceServer will
 // result in compilation errors.
-type UnsafeUsersServiceServer interface {
-	mustEmbedUnimplementedUsersServiceServer()
+type UnsafeUserServiceServer interface {
+	mustEmbedUnimplementedUserServiceServer()
 }
 
-func RegisterUsersServiceServer(s grpc.ServiceRegistrar, srv UsersServiceServer) {
-	s.RegisterService(&UsersService_ServiceDesc, srv)
+func RegisterUserServiceServer(s grpc.ServiceRegistrar, srv UserServiceServer) {
+	s.RegisterService(&UserService_ServiceDesc, srv)
 }
 
-func _UsersService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServiceServer).GetUser(ctx, in)
+		return srv.(UserServiceServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/UsersService/GetUser",
+		FullMethod: "/UserService/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServiceServer).GetUser(ctx, req.(*GetUserRequest))
+		return srv.(UserServiceServer).GetUser(ctx, req.(*GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// UsersService_ServiceDesc is the grpc.ServiceDesc for UsersService service.
+// UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UsersService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "UsersService",
-	HandlerType: (*UsersServiceServer)(nil),
+var UserService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "UserService",
+	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetUser",
-			Handler:    _UsersService_GetUser_Handler,
+			Handler:    _UserService_GetUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

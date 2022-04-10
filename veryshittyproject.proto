@@ -11,12 +11,12 @@ message User {
   string description = 8;
 }
 
-service Auth {
+service AuthService {
   rpc LoginTelegramDetails(LoginTelegramDetailsRequest) returns (LoginTelegramDetailsResponse);
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
 }
 
-service UsersService {
+service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
 }
 
