@@ -11,9 +11,13 @@ message User {
   string description = 8;
 }
 
-service API {
+service Auth {
   rpc LoginTelegramDetails(LoginTelegramDetailsRequest) returns (LoginTelegramDetailsResponse);
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
+}
+
+service UsersService {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
 }
 
 message LoginTelegramDetailsRequest {
@@ -29,5 +33,13 @@ message LoginTelegramRequest {
 }
 
 message LoginTelegramResponse {
+  User user = 1;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message GetUserResponse {
   User user = 1;
 }
