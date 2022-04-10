@@ -18,10 +18,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type APIClient interface {
-	Motd(ctx context.Context, in *MotdRequest, opts ...grpc.CallOption) (*MotdResponse, error)
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*UpdateProfileResponse, error)
+	LoginTelegramDetails(ctx context.Context, in *LoginTelegramDetailsRequest, opts ...grpc.CallOption) (*LoginTelegramDetailsResponse, error)
+	LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error)
 }
 
 type aPIClient struct {
@@ -32,36 +30,18 @@ func NewAPIClient(cc grpc.ClientConnInterface) APIClient {
 	return &aPIClient{cc}
 }
 
-func (c *aPIClient) Motd(ctx context.Context, in *MotdRequest, opts ...grpc.CallOption) (*MotdResponse, error) {
-	out := new(MotdResponse)
-	err := c.cc.Invoke(ctx, "/API/Motd", in, out, opts...)
+func (c *aPIClient) LoginTelegramDetails(ctx context.Context, in *LoginTelegramDetailsRequest, opts ...grpc.CallOption) (*LoginTelegramDetailsResponse, error) {
+	out := new(LoginTelegramDetailsResponse)
+	err := c.cc.Invoke(ctx, "/API/LoginTelegramDetails", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aPIClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
-	out := new(RegisterResponse)
-	err := c.cc.Invoke(ctx, "/API/Register", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *aPIClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
-	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, "/API/Login", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *aPIClient) UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*UpdateProfileResponse, error) {
-	out := new(UpdateProfileResponse)
-	err := c.cc.Invoke(ctx, "/API/UpdateProfile", in, out, opts...)
+func (c *aPIClient) LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error) {
+	out := new(LoginTelegramResponse)
+	err := c.cc.Invoke(ctx, "/API/LoginTelegram", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,10 +52,8 @@ func (c *aPIClient) UpdateProfile(ctx context.Context, in *UpdateProfileRequest,
 // All implementations must embed UnimplementedAPIServer
 // for forward compatibility
 type APIServer interface {
-	Motd(context.Context, *MotdRequest) (*MotdResponse, error)
-	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	UpdateProfile(context.Context, *UpdateProfileRequest) (*UpdateProfileResponse, error)
+	LoginTelegramDetails(context.Context, *LoginTelegramDetailsRequest) (*LoginTelegramDetailsResponse, error)
+	LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error)
 	mustEmbedUnimplementedAPIServer()
 }
 
@@ -83,17 +61,11 @@ type APIServer interface {
 type UnimplementedAPIServer struct {
 }
 
-func (UnimplementedAPIServer) Motd(context.Context, *MotdRequest) (*MotdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Motd not implemented")
+func (UnimplementedAPIServer) LoginTelegramDetails(context.Context, *LoginTelegramDetailsRequest) (*LoginTelegramDetailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoginTelegramDetails not implemented")
 }
-func (UnimplementedAPIServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
-}
-func (UnimplementedAPIServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
-}
-func (UnimplementedAPIServer) UpdateProfile(context.Context, *UpdateProfileRequest) (*UpdateProfileResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
+func (UnimplementedAPIServer) LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoginTelegram not implemented")
 }
 func (UnimplementedAPIServer) mustEmbedUnimplementedAPIServer() {}
 
@@ -108,74 +80,38 @@ func RegisterAPIServer(s grpc.ServiceRegistrar, srv APIServer) {
 	s.RegisterService(&API_ServiceDesc, srv)
 }
 
-func _API_Motd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MotdRequest)
+func _API_LoginTelegramDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginTelegramDetailsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(APIServer).Motd(ctx, in)
+		return srv.(APIServer).LoginTelegramDetails(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/API/Motd",
+		FullMethod: "/API/LoginTelegramDetails",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServer).Motd(ctx, req.(*MotdRequest))
+		return srv.(APIServer).LoginTelegramDetails(ctx, req.(*LoginTelegramDetailsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _API_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterRequest)
+func _API_LoginTelegram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginTelegramRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(APIServer).Register(ctx, in)
+		return srv.(APIServer).LoginTelegram(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/API/Register",
+		FullMethod: "/API/LoginTelegram",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServer).Register(ctx, req.(*RegisterRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _API_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(APIServer).Login(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/API/Login",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServer).Login(ctx, req.(*LoginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _API_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateProfileRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(APIServer).UpdateProfile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/API/UpdateProfile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(APIServer).UpdateProfile(ctx, req.(*UpdateProfileRequest))
+		return srv.(APIServer).LoginTelegram(ctx, req.(*LoginTelegramRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,20 +124,12 @@ var API_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*APIServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Motd",
-			Handler:    _API_Motd_Handler,
+			MethodName: "LoginTelegramDetails",
+			Handler:    _API_LoginTelegramDetails_Handler,
 		},
 		{
-			MethodName: "Register",
-			Handler:    _API_Register_Handler,
-		},
-		{
-			MethodName: "Login",
-			Handler:    _API_Login_Handler,
-		},
-		{
-			MethodName: "UpdateProfile",
-			Handler:    _API_UpdateProfile_Handler,
+			MethodName: "LoginTelegram",
+			Handler:    _API_LoginTelegram_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
