@@ -25,7 +25,6 @@ message LoginTelegramDetailsRequest {
 
 message LoginTelegramDetailsResponse {
   string login = 1;
-  string auth_url = 2;
 }
 
 message LoginTelegramRequest {
