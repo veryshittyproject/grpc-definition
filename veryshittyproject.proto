@@ -4,40 +4,124 @@ option go_package = "github.com/veryshittyproject/grpc-definition;vspservice";
 
 message User {
   string id = 1;
-  optional string username = 2;
-  string first_name = 3;
-  string last_name = 4;
+  string first_name = 4;
+  string last_name = 5;
+  enum Role {
+    Unknown = 0;
+    User = 1;
+    Admin = 2;
+  };
+  Role role = 6;
 }
 
+message Student {
+  string id = 1;
+  optional User user = 2;
+  string username = 3;
+  string first_name = 4;
+  string last_name = 5;
+  enum Role {
+    Regular = 0;
+    DeputyLeader = 1;
+    Leader = 2;
+  };
+  Role role = 6;
+  Group group = 7;
+}
+
+message Group {
+  string id = 1;
+  string code = 2;
+}
+
+message Poll {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  repeated PollOption options = 4;
+  Student created_by = 5;
+  Group group = 6;
+}
+
+message PollOption {
+  string poll_id = 1;
+  string id = 2;
+  string text = 3;
+  string answer = 4;
+}
+
+message PollAnswer {
+  string poll_option_id = 1;
+  string student_id = 2;
+}
+
+// AuthService
 service AuthService {
   rpc LoginTelegramDetails(LoginTelegramDetailsRequest) returns (LoginTelegramDetailsResponse);
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
 }
 
-service UserService {
-  rpc GetUser(GetUserRequest) returns (GetUserResponse);
-}
+message LoginTelegramDetailsRequest {}
 
-message LoginTelegramDetailsRequest {
-}
-
-message LoginTelegramDetailsResponse {
-  string login = 1;
-}
+message LoginTelegramDetailsResponse {string login = 1;}
 
 message LoginTelegramRequest {
   map<string, string> responseFields = 1;
   string hash = 2;
 }
 
-message LoginTelegramResponse {
-  User user = 1;
+message LoginTelegramResponse {User user = 1;}
+
+// UserService
+service UserService {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
 }
 
-message GetUserRequest {
-  string id = 1;
+message GetUserRequest {string id = 1;}
+
+message GetUserResponse {User user = 1;}
+
+// PollService
+service PollService {
+  rpc CreatePoll(CreatePollRequest) returns (CreatePollResponse);
+  rpc GetPoll(GetPollRequest) returns (GetPollResponse);
+  rpc GetPollList(GetPollListRequest) returns (GetPollListResponse);
+
+  rpc AnswerPoll(AnswerPollRequest) returns (AnswerPollResponse);
 }
 
-message GetUserResponse {
-  User user = 1;
+message CreatePollRequest {
+  string title = 1;
+  string description = 2;
+  repeated PollOption questions = 3;
+
+  string student_id = 4;
+}
+
+message CreatePollResponse {Poll poll = 1;}
+
+message GetPollRequest {
+  string poll_id = 1;
+  string student_id = 2;
+}
+
+message GetPollResponse {
+  Poll poll = 1;
+  repeated PollAnswer answers = 2;
+}
+
+message GetPollListRequest {
+  string group_id = 1;
+  string student_id = 2;
+}
+
+message GetPollListResponse {repeated Poll polls = 1;}
+
+message AnswerPollRequest {
+  string poll_option_id = 1;
+  string student_id = 2;
+}
+
+message AnswerPollResponse {
+  string response = 1;
 }

@@ -221,3 +221,197 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "veryshittyproject.proto",
 }
+
+// PollServiceClient is the client API for PollService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type PollServiceClient interface {
+	CreatePoll(ctx context.Context, in *CreatePollRequest, opts ...grpc.CallOption) (*CreatePollResponse, error)
+	GetPoll(ctx context.Context, in *GetPollRequest, opts ...grpc.CallOption) (*GetPollResponse, error)
+	GetPollList(ctx context.Context, in *GetPollListRequest, opts ...grpc.CallOption) (*GetPollListResponse, error)
+	AnswerPoll(ctx context.Context, in *AnswerPollRequest, opts ...grpc.CallOption) (*AnswerPollResponse, error)
+}
+
+type pollServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewPollServiceClient(cc grpc.ClientConnInterface) PollServiceClient {
+	return &pollServiceClient{cc}
+}
+
+func (c *pollServiceClient) CreatePoll(ctx context.Context, in *CreatePollRequest, opts ...grpc.CallOption) (*CreatePollResponse, error) {
+	out := new(CreatePollResponse)
+	err := c.cc.Invoke(ctx, "/PollService/CreatePoll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pollServiceClient) GetPoll(ctx context.Context, in *GetPollRequest, opts ...grpc.CallOption) (*GetPollResponse, error) {
+	out := new(GetPollResponse)
+	err := c.cc.Invoke(ctx, "/PollService/GetPoll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pollServiceClient) GetPollList(ctx context.Context, in *GetPollListRequest, opts ...grpc.CallOption) (*GetPollListResponse, error) {
+	out := new(GetPollListResponse)
+	err := c.cc.Invoke(ctx, "/PollService/GetPollList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pollServiceClient) AnswerPoll(ctx context.Context, in *AnswerPollRequest, opts ...grpc.CallOption) (*AnswerPollResponse, error) {
+	out := new(AnswerPollResponse)
+	err := c.cc.Invoke(ctx, "/PollService/AnswerPoll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PollServiceServer is the server API for PollService service.
+// All implementations must embed UnimplementedPollServiceServer
+// for forward compatibility
+type PollServiceServer interface {
+	CreatePoll(context.Context, *CreatePollRequest) (*CreatePollResponse, error)
+	GetPoll(context.Context, *GetPollRequest) (*GetPollResponse, error)
+	GetPollList(context.Context, *GetPollListRequest) (*GetPollListResponse, error)
+	AnswerPoll(context.Context, *AnswerPollRequest) (*AnswerPollResponse, error)
+	mustEmbedUnimplementedPollServiceServer()
+}
+
+// UnimplementedPollServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedPollServiceServer struct {
+}
+
+func (UnimplementedPollServiceServer) CreatePoll(context.Context, *CreatePollRequest) (*CreatePollResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePoll not implemented")
+}
+func (UnimplementedPollServiceServer) GetPoll(context.Context, *GetPollRequest) (*GetPollResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPoll not implemented")
+}
+func (UnimplementedPollServiceServer) GetPollList(context.Context, *GetPollListRequest) (*GetPollListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPollList not implemented")
+}
+func (UnimplementedPollServiceServer) AnswerPoll(context.Context, *AnswerPollRequest) (*AnswerPollResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AnswerPoll not implemented")
+}
+func (UnimplementedPollServiceServer) mustEmbedUnimplementedPollServiceServer() {}
+
+// UnsafePollServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PollServiceServer will
+// result in compilation errors.
+type UnsafePollServiceServer interface {
+	mustEmbedUnimplementedPollServiceServer()
+}
+
+func RegisterPollServiceServer(s grpc.ServiceRegistrar, srv PollServiceServer) {
+	s.RegisterService(&PollService_ServiceDesc, srv)
+}
+
+func _PollService_CreatePoll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePollRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PollServiceServer).CreatePoll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/PollService/CreatePoll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PollServiceServer).CreatePoll(ctx, req.(*CreatePollRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PollService_GetPoll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPollRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PollServiceServer).GetPoll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/PollService/GetPoll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PollServiceServer).GetPoll(ctx, req.(*GetPollRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PollService_GetPollList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPollListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PollServiceServer).GetPollList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/PollService/GetPollList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PollServiceServer).GetPollList(ctx, req.(*GetPollListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PollService_AnswerPoll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AnswerPollRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PollServiceServer).AnswerPoll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/PollService/AnswerPoll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PollServiceServer).AnswerPoll(ctx, req.(*AnswerPollRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PollService_ServiceDesc is the grpc.ServiceDesc for PollService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var PollService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "PollService",
+	HandlerType: (*PollServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreatePoll",
+			Handler:    _PollService_CreatePoll_Handler,
+		},
+		{
+			MethodName: "GetPoll",
+			Handler:    _PollService_GetPoll_Handler,
+		},
+		{
+			MethodName: "GetPollList",
+			Handler:    _PollService_GetPollList_Handler,
+		},
+		{
+			MethodName: "AnswerPoll",
+			Handler:    _PollService_AnswerPoll_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "veryshittyproject.proto",
+}
