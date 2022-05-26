@@ -26,6 +26,7 @@ type UserServiceClient interface {
 	LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	GetStudent(ctx context.Context, in *GetStudentRequest, opts ...grpc.CallOption) (*GetStudentResponse, error)
+	FindStudents(ctx context.Context, in *FindStudentsRequest, opts ...grpc.CallOption) (*FindStudentsResponse, error)
 }
 
 type userServiceClient struct {
@@ -72,6 +73,15 @@ func (c *userServiceClient) GetStudent(ctx context.Context, in *GetStudentReques
 	return out, nil
 }
 
+func (c *userServiceClient) FindStudents(ctx context.Context, in *FindStudentsRequest, opts ...grpc.CallOption) (*FindStudentsResponse, error) {
+	out := new(FindStudentsResponse)
+	err := c.cc.Invoke(ctx, "/UserService/FindStudents", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type UserServiceServer interface {
 	LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	GetStudent(context.Context, *GetStudentRequest) (*GetStudentResponse, error)
+	FindStudents(context.Context, *FindStudentsRequest) (*FindStudentsResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) 
 }
 func (UnimplementedUserServiceServer) GetStudent(context.Context, *GetStudentRequest) (*GetStudentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStudent not implemented")
+}
+func (UnimplementedUserServiceServer) FindStudents(context.Context, *FindStudentsRequest) (*FindStudentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindStudents not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -184,6 +198,24 @@ func _UserService_GetStudent_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_FindStudents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindStudentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).FindStudents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserService/FindStudents",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).FindStudents(ctx, req.(*FindStudentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +238,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetStudent",
 			Handler:    _UserService_GetStudent_Handler,
+		},
+		{
+			MethodName: "FindStudents",
+			Handler:    _UserService_FindStudents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

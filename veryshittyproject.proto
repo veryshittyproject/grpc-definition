@@ -40,6 +40,7 @@ service UserService {
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
   rpc GetStudent(GetStudentRequest) returns (GetStudentResponse);
+  rpc FindStudents(FindStudentsRequest) returns (FindStudentsResponse);
 }
 
 message LoginTelegramDetailsRequest {}
@@ -60,3 +61,7 @@ message GetUserResponse {User user = 1;}
 message GetStudentRequest {string id = 1;}
 
 message GetStudentResponse {Student student = 1;}
+
+message FindStudentsRequest {string group_id = 1;}
+
+message FindStudentsResponse {repeated Student student = 1;}
