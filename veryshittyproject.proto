@@ -64,4 +64,4 @@ message GetStudentResponse {Student student = 1;}
 
 message FindStudentsRequest {string group_id = 1;}
 
-message FindStudentsResponse {repeated Student student = 1;}
+message FindStudentsResponse {repeated Student students = 1;}
