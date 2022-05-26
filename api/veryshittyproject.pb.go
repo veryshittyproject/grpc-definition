@@ -761,6 +761,162 @@ func (x *FindStudentsResponse) GetStudents() []*Student {
 	return nil
 }
 
+type StudentImportRow struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Lastname   string `protobuf:"bytes,1,opt,name=lastname,proto3" json:"lastname,omitempty"`
+	Firstname  string `protobuf:"bytes,2,opt,name=firstname,proto3" json:"firstname,omitempty"`
+	TelegramId int64  `protobuf:"varint,3,opt,name=telegram_id,json=telegramId,proto3" json:"telegram_id,omitempty"`
+}
+
+func (x *StudentImportRow) Reset() {
+	*x = StudentImportRow{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_veryshittyproject_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StudentImportRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StudentImportRow) ProtoMessage() {}
+
+func (x *StudentImportRow) ProtoReflect() protoreflect.Message {
+	mi := &file_veryshittyproject_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StudentImportRow.ProtoReflect.Descriptor instead.
+func (*StudentImportRow) Descriptor() ([]byte, []int) {
+	return file_veryshittyproject_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *StudentImportRow) GetLastname() string {
+	if x != nil {
+		return x.Lastname
+	}
+	return ""
+}
+
+func (x *StudentImportRow) GetFirstname() string {
+	if x != nil {
+		return x.Firstname
+	}
+	return ""
+}
+
+func (x *StudentImportRow) GetTelegramId() int64 {
+	if x != nil {
+		return x.TelegramId
+	}
+	return 0
+}
+
+type ImportStudentsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GroupCode string              `protobuf:"bytes,1,opt,name=group_code,json=groupCode,proto3" json:"group_code,omitempty"`
+	Students  []*StudentImportRow `protobuf:"bytes,2,rep,name=students,proto3" json:"students,omitempty"`
+}
+
+func (x *ImportStudentsRequest) Reset() {
+	*x = ImportStudentsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_veryshittyproject_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImportStudentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportStudentsRequest) ProtoMessage() {}
+
+func (x *ImportStudentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_veryshittyproject_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportStudentsRequest.ProtoReflect.Descriptor instead.
+func (*ImportStudentsRequest) Descriptor() ([]byte, []int) {
+	return file_veryshittyproject_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ImportStudentsRequest) GetGroupCode() string {
+	if x != nil {
+		return x.GroupCode
+	}
+	return ""
+}
+
+func (x *ImportStudentsRequest) GetStudents() []*StudentImportRow {
+	if x != nil {
+		return x.Students
+	}
+	return nil
+}
+
+type ImportStudentsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ImportStudentsResponse) Reset() {
+	*x = ImportStudentsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_veryshittyproject_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImportStudentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportStudentsResponse) ProtoMessage() {}
+
+func (x *ImportStudentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_veryshittyproject_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportStudentsResponse.ProtoReflect.Descriptor instead.
+func (*ImportStudentsResponse) Descriptor() ([]byte, []int) {
+	return file_veryshittyproject_proto_rawDescGZIP(), []int{14}
+}
+
 var File_veryshittyproject_proto protoreflect.FileDescriptor
 
 var file_veryshittyproject_proto_rawDesc = []byte{
@@ -833,7 +989,22 @@ var file_veryshittyproject_proto_rawDesc = []byte{
 	0x0a, 0x14, 0x46, 0x69, 0x6e, 0x64, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x24, 0x0a, 0x08, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e,
 	0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x53, 0x74, 0x75, 0x64, 0x65,
-	0x6e, 0x74, 0x52, 0x08, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x32, 0xc4, 0x02, 0x0a,
+	0x6e, 0x74, 0x52, 0x08, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x6d, 0x0a, 0x10,
+	0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x6f, 0x77,
+	0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x61, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09,
+	0x66, 0x69, 0x72, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x66, 0x69, 0x72, 0x73, 0x74, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x65,
+	0x6c, 0x65, 0x67, 0x72, 0x61, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x0a, 0x74, 0x65, 0x6c, 0x65, 0x67, 0x72, 0x61, 0x6d, 0x49, 0x64, 0x22, 0x65, 0x0a, 0x15, 0x49,
+	0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x63, 0x6f,
+	0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x43,
+	0x6f, 0x64, 0x65, 0x12, 0x2d, 0x0a, 0x08, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x18,
+	0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x49,
+	0x6d, 0x70, 0x6f, 0x72, 0x74, 0x52, 0x6f, 0x77, 0x52, 0x08, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e,
+	0x74, 0x73, 0x22, 0x18, 0x0a, 0x16, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x74, 0x75, 0x64,
+	0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x87, 0x03, 0x0a,
 	0x0b, 0x55, 0x73, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x53, 0x0a, 0x14,
 	0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x54, 0x65, 0x6c, 0x65, 0x67, 0x72, 0x61, 0x6d, 0x44, 0x65, 0x74,
 	0x61, 0x69, 0x6c, 0x73, 0x12, 0x1c, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x54, 0x65, 0x6c, 0x65,
@@ -854,11 +1025,15 @@ var file_veryshittyproject_proto_rawDesc = []byte{
 	0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x14, 0x2e, 0x46, 0x69, 0x6e, 0x64, 0x53, 0x74, 0x75,
 	0x64, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x46,
 	0x69, 0x6e, 0x64, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x42, 0x39, 0x5a, 0x37, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x76, 0x65, 0x72, 0x79, 0x73, 0x68, 0x69, 0x74, 0x74, 0x79, 0x70, 0x72, 0x6f, 0x6a,
-	0x65, 0x63, 0x74, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74,
-	0x69, 0x6f, 0x6e, 0x3b, 0x76, 0x73, 0x70, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6e, 0x73, 0x65, 0x12, 0x41, 0x0a, 0x0e, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x74, 0x75,
+	0x64, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x16, 0x2e, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x74,
+	0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e,
+	0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x39, 0x5a, 0x37, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x65, 0x72, 0x79, 0x73, 0x68, 0x69, 0x74, 0x74, 0x79, 0x70,
+	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x64, 0x65, 0x66, 0x69,
+	0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x3b, 0x76, 0x73, 0x70, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -874,7 +1049,7 @@ func file_veryshittyproject_proto_rawDescGZIP() []byte {
 }
 
 var file_veryshittyproject_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_veryshittyproject_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_veryshittyproject_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_veryshittyproject_proto_goTypes = []interface{}{
 	(User_Role)(0),                       // 0: User.Role
 	(Student_Role)(0),                    // 1: Student.Role
@@ -890,32 +1065,38 @@ var file_veryshittyproject_proto_goTypes = []interface{}{
 	(*GetStudentResponse)(nil),           // 11: GetStudentResponse
 	(*FindStudentsRequest)(nil),          // 12: FindStudentsRequest
 	(*FindStudentsResponse)(nil),         // 13: FindStudentsResponse
-	nil,                                  // 14: LoginTelegramRequest.ResponseFieldsEntry
+	(*StudentImportRow)(nil),             // 14: StudentImportRow
+	(*ImportStudentsRequest)(nil),        // 15: ImportStudentsRequest
+	(*ImportStudentsResponse)(nil),       // 16: ImportStudentsResponse
+	nil,                                  // 17: LoginTelegramRequest.ResponseFieldsEntry
 }
 var file_veryshittyproject_proto_depIdxs = []int32{
 	0,  // 0: User.role:type_name -> User.Role
 	2,  // 1: Student.user:type_name -> User
 	1,  // 2: Student.role:type_name -> Student.Role
-	14, // 3: LoginTelegramRequest.responseFields:type_name -> LoginTelegramRequest.ResponseFieldsEntry
+	17, // 3: LoginTelegramRequest.responseFields:type_name -> LoginTelegramRequest.ResponseFieldsEntry
 	2,  // 4: LoginTelegramResponse.user:type_name -> User
 	2,  // 5: GetUserResponse.user:type_name -> User
 	3,  // 6: GetStudentResponse.student:type_name -> Student
 	3,  // 7: FindStudentsResponse.students:type_name -> Student
-	4,  // 8: UserService.LoginTelegramDetails:input_type -> LoginTelegramDetailsRequest
-	6,  // 9: UserService.LoginTelegram:input_type -> LoginTelegramRequest
-	8,  // 10: UserService.GetUser:input_type -> GetUserRequest
-	10, // 11: UserService.GetStudent:input_type -> GetStudentRequest
-	12, // 12: UserService.FindStudents:input_type -> FindStudentsRequest
-	5,  // 13: UserService.LoginTelegramDetails:output_type -> LoginTelegramDetailsResponse
-	7,  // 14: UserService.LoginTelegram:output_type -> LoginTelegramResponse
-	9,  // 15: UserService.GetUser:output_type -> GetUserResponse
-	11, // 16: UserService.GetStudent:output_type -> GetStudentResponse
-	13, // 17: UserService.FindStudents:output_type -> FindStudentsResponse
-	13, // [13:18] is the sub-list for method output_type
-	8,  // [8:13] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	14, // 8: ImportStudentsRequest.students:type_name -> StudentImportRow
+	4,  // 9: UserService.LoginTelegramDetails:input_type -> LoginTelegramDetailsRequest
+	6,  // 10: UserService.LoginTelegram:input_type -> LoginTelegramRequest
+	8,  // 11: UserService.GetUser:input_type -> GetUserRequest
+	10, // 12: UserService.GetStudent:input_type -> GetStudentRequest
+	12, // 13: UserService.FindStudents:input_type -> FindStudentsRequest
+	15, // 14: UserService.ImportStudents:input_type -> ImportStudentsRequest
+	5,  // 15: UserService.LoginTelegramDetails:output_type -> LoginTelegramDetailsResponse
+	7,  // 16: UserService.LoginTelegram:output_type -> LoginTelegramResponse
+	9,  // 17: UserService.GetUser:output_type -> GetUserResponse
+	11, // 18: UserService.GetStudent:output_type -> GetStudentResponse
+	13, // 19: UserService.FindStudents:output_type -> FindStudentsResponse
+	16, // 20: UserService.ImportStudents:output_type -> ImportStudentsResponse
+	15, // [15:21] is the sub-list for method output_type
+	9,  // [9:15] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_veryshittyproject_proto_init() }
@@ -1068,6 +1249,42 @@ func file_veryshittyproject_proto_init() {
 				return nil
 			}
 		}
+		file_veryshittyproject_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StudentImportRow); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_veryshittyproject_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImportStudentsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_veryshittyproject_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImportStudentsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_veryshittyproject_proto_msgTypes[0].OneofWrappers = []interface{}{}
 	file_veryshittyproject_proto_msgTypes[1].OneofWrappers = []interface{}{}
@@ -1077,7 +1294,7 @@ func file_veryshittyproject_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_veryshittyproject_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   13,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

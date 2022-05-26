@@ -42,27 +42,57 @@ service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
   rpc GetStudent(GetStudentRequest) returns (GetStudentResponse);
   rpc FindStudents(FindStudentsRequest) returns (FindStudentsResponse);
+  rpc ImportStudents(ImportStudentsRequest) returns (ImportStudentsResponse);
 }
 
 message LoginTelegramDetailsRequest {}
 
-message LoginTelegramDetailsResponse {string login = 1;}
+message LoginTelegramDetailsResponse {
+  string login = 1;
+}
 
 message LoginTelegramRequest {
   map<string, string> responseFields = 1;
   string hash = 2;
 }
 
-message LoginTelegramResponse {User user = 1;}
+message LoginTelegramResponse {
+  User user = 1;
+}
 
-message GetUserRequest {string id = 1;}
+message GetUserRequest {
+  string id = 1;
+}
 
-message GetUserResponse {User user = 1;}
+message GetUserResponse {
+  User user = 1;
+}
 
-message GetStudentRequest {string id = 1;}
+message GetStudentRequest {
+  string id = 1;
+}
 
-message GetStudentResponse {Student student = 1;}
+message GetStudentResponse {
+  Student student = 1;
+}
 
-message FindStudentsRequest {string group_id = 1;}
+message FindStudentsRequest {
+  string group_id = 1;
+}
 
-message FindStudentsResponse {repeated Student students = 1;}
+message FindStudentsResponse {
+  repeated Student students = 1;
+}
+
+message StudentImportRow {
+  string lastname = 1;
+  string firstname = 2;
+  int64 telegram_id = 3;
+}
+
+message ImportStudentsRequest {
+  string group_code = 1;
+  repeated StudentImportRow students = 2;
+}
+
+message ImportStudentsResponse {}
