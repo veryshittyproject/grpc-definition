@@ -34,29 +34,8 @@ message Group {
   string code = 2;
 }
 
-message Poll {
-  string id = 1;
-  string title = 2;
-  string description = 3;
-  repeated PollOption options = 4;
-  Student created_by = 5;
-  Group group = 6;
-}
-
-message PollOption {
-  string poll_id = 1;
-  string id = 2;
-  string text = 3;
-  string answer = 4;
-}
-
-message PollAnswer {
-  string poll_option_id = 1;
-  string student_id = 2;
-}
-
-// AuthService
-service AuthService {
+// UserService
+service UserService {
   rpc LoginTelegramDetails(LoginTelegramDetailsRequest) returns (LoginTelegramDetailsResponse);
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
