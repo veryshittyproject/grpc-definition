@@ -12,6 +12,7 @@ message User {
     Admin = 2;
   };
   Role role = 6;
+  optional string group_id = 7;
 }
 
 message Student {
