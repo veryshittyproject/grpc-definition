@@ -59,6 +59,7 @@ message PollAnswer {
 service AuthService {
   rpc LoginTelegramDetails(LoginTelegramDetailsRequest) returns (LoginTelegramDetailsResponse);
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
 }
 
 message LoginTelegramDetailsRequest {}
@@ -72,56 +73,6 @@ message LoginTelegramRequest {
 
 message LoginTelegramResponse {User user = 1;}
 
-// UserService
-service UserService {
-  rpc GetUser(GetUserRequest) returns (GetUserResponse);
-}
-
 message GetUserRequest {string id = 1;}
 
 message GetUserResponse {User user = 1;}
-
-// PollService
-service PollService {
-  rpc CreatePoll(CreatePollRequest) returns (CreatePollResponse);
-  rpc GetPoll(GetPollRequest) returns (GetPollResponse);
-  rpc GetPollList(GetPollListRequest) returns (GetPollListResponse);
-
-  rpc AnswerPoll(AnswerPollRequest) returns (AnswerPollResponse);
-}
-
-message CreatePollRequest {
-  string title = 1;
-  string description = 2;
-  repeated PollOption questions = 3;
-
-  string student_id = 4;
-}
-
-message CreatePollResponse {Poll poll = 1;}
-
-message GetPollRequest {
-  string poll_id = 1;
-  string student_id = 2;
-}
-
-message GetPollResponse {
-  Poll poll = 1;
-  repeated PollAnswer answers = 2;
-}
-
-message GetPollListRequest {
-  string group_id = 1;
-  string student_id = 2;
-}
-
-message GetPollListResponse {repeated Poll polls = 1;}
-
-message AnswerPollRequest {
-  string poll_option_id = 1;
-  string student_id = 2;
-}
-
-message AnswerPollResponse {
-  string response = 1;
-}
