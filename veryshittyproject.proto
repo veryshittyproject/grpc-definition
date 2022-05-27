@@ -30,19 +30,24 @@ message Student {
   optional string group_id = 8;
 }
 
-//message Group {
-//  string id = 1;
-//  string code = 2;
-//}
+message Group {
+  string id = 1;
+  string code = 2;
+  repeated Student students = 3;
+}
 
 // UserService
 service UserService {
   rpc LoginTelegramDetails(LoginTelegramDetailsRequest) returns (LoginTelegramDetailsResponse);
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
+
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
+
   rpc GetStudent(GetStudentRequest) returns (GetStudentResponse);
   rpc FindStudents(FindStudentsRequest) returns (FindStudentsResponse);
   rpc ImportStudents(ImportStudentsRequest) returns (ImportStudentsResponse);
+
+  rpc FindGroups(FindGroupsRequest) returns (FindGroupsResponse);
 }
 
 message LoginTelegramDetailsRequest {}
@@ -96,3 +101,11 @@ message ImportStudentsRequest {
 }
 
 message ImportStudentsResponse {}
+
+message FindGroupsRequest {
+  bool include_students = 1;
+}
+
+message FindGroupsResponse {
+  Group group = 1;
+}
