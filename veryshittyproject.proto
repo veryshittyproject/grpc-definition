@@ -69,7 +69,7 @@ message GetUserResponse {
 }
 
 message GetStudentRequest {
-  string id = 1;
+  string user_id = 1;
 }
 
 message GetStudentResponse {
