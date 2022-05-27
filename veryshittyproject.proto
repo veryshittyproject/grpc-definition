@@ -48,6 +48,7 @@ service UserService {
   rpc ImportStudents(ImportStudentsRequest) returns (ImportStudentsResponse);
 
   rpc FindGroups(FindGroupsRequest) returns (FindGroupsResponse);
+  rpc GetGroup(GetGroupRequest) returns (GetGroupResponse);
 }
 
 message LoginTelegramDetailsRequest {}
@@ -107,5 +108,12 @@ message FindGroupsRequest {
 }
 
 message FindGroupsResponse {
+  repeated Group group = 1;
+}
+
+message GetGroupRequest {
+}
+
+message GetGroupResponse {
   Group group = 1;
 }
