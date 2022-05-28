@@ -112,6 +112,8 @@ message FindGroupsResponse {
 }
 
 message GetGroupRequest {
+  string group_id = 1;
+  bool include_students = 2;
 }
 
 message GetGroupResponse {
