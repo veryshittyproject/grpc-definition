@@ -18,16 +18,15 @@ message Student {
   string id = 1;
   string user_id = 2;
   optional User user = 3;
-  string username = 4;
-  string first_name = 5;
-  string last_name = 6;
+  string first_name = 4;
+  string last_name = 5;
   enum Role {
     Regular = 0;
     DeputyLeader = 1;
     Leader = 2;
   };
-  Role role = 7;
-  optional string group_id = 8;
+  Role role = 6;
+  optional string group_id = 7;
 }
 
 message Group {
@@ -42,6 +41,7 @@ service UserService {
   rpc LoginTelegram(LoginTelegramRequest) returns (LoginTelegramResponse);
 
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc FindUsers(FindUsersRequest) returns (FindUsersResponse);
 
   rpc GetStudent(GetStudentRequest) returns (GetStudentResponse);
   rpc FindStudents(FindStudentsRequest) returns (FindStudentsResponse);
@@ -74,6 +74,13 @@ message GetUserResponse {
   User user = 1;
 }
 
+message FindUsersRequest {
+}
+
+message FindUsersResponse {
+  repeated User users = 1;
+}
+
 message GetStudentRequest {
   string user_id = 1;
 }
@@ -83,7 +90,7 @@ message GetStudentResponse {
 }
 
 message FindStudentsRequest {
-  string group_id = 1;
+  optional string group_id = 1;
 }
 
 message FindStudentsResponse {

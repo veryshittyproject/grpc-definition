@@ -25,6 +25,7 @@ type UserServiceClient interface {
 	LoginTelegramDetails(ctx context.Context, in *LoginTelegramDetailsRequest, opts ...grpc.CallOption) (*LoginTelegramDetailsResponse, error)
 	LoginTelegram(ctx context.Context, in *LoginTelegramRequest, opts ...grpc.CallOption) (*LoginTelegramResponse, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	FindUsers(ctx context.Context, in *FindUsersRequest, opts ...grpc.CallOption) (*FindUsersResponse, error)
 	GetStudent(ctx context.Context, in *GetStudentRequest, opts ...grpc.CallOption) (*GetStudentResponse, error)
 	FindStudents(ctx context.Context, in *FindStudentsRequest, opts ...grpc.CallOption) (*FindStudentsResponse, error)
 	ImportStudents(ctx context.Context, in *ImportStudentsRequest, opts ...grpc.CallOption) (*ImportStudentsResponse, error)
@@ -61,6 +62,15 @@ func (c *userServiceClient) LoginTelegram(ctx context.Context, in *LoginTelegram
 func (c *userServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
 	out := new(GetUserResponse)
 	err := c.cc.Invoke(ctx, "/UserService/GetUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) FindUsers(ctx context.Context, in *FindUsersRequest, opts ...grpc.CallOption) (*FindUsersResponse, error) {
+	out := new(FindUsersResponse)
+	err := c.cc.Invoke(ctx, "/UserService/FindUsers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -119,6 +129,7 @@ type UserServiceServer interface {
 	LoginTelegramDetails(context.Context, *LoginTelegramDetailsRequest) (*LoginTelegramDetailsResponse, error)
 	LoginTelegram(context.Context, *LoginTelegramRequest) (*LoginTelegramResponse, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	FindUsers(context.Context, *FindUsersRequest) (*FindUsersResponse, error)
 	GetStudent(context.Context, *GetStudentRequest) (*GetStudentResponse, error)
 	FindStudents(context.Context, *FindStudentsRequest) (*FindStudentsResponse, error)
 	ImportStudents(context.Context, *ImportStudentsRequest) (*ImportStudentsResponse, error)
@@ -139,6 +150,9 @@ func (UnimplementedUserServiceServer) LoginTelegram(context.Context, *LoginTeleg
 }
 func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedUserServiceServer) FindUsers(context.Context, *FindUsersRequest) (*FindUsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindUsers not implemented")
 }
 func (UnimplementedUserServiceServer) GetStudent(context.Context, *GetStudentRequest) (*GetStudentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStudent not implemented")
@@ -218,6 +232,24 @@ func _UserService_GetUser_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetUser(ctx, req.(*GetUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_FindUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindUsersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).FindUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserService/FindUsers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).FindUsers(ctx, req.(*FindUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -330,6 +362,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUser",
 			Handler:    _UserService_GetUser_Handler,
+		},
+		{
+			MethodName: "FindUsers",
+			Handler:    _UserService_FindUsers_Handler,
 		},
 		{
 			MethodName: "GetStudent",
