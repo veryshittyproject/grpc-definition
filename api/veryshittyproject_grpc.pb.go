@@ -29,6 +29,7 @@ type UserServiceClient interface {
 	GetStudent(ctx context.Context, in *GetStudentRequest, opts ...grpc.CallOption) (*GetStudentResponse, error)
 	FindStudents(ctx context.Context, in *FindStudentsRequest, opts ...grpc.CallOption) (*FindStudentsResponse, error)
 	ImportStudents(ctx context.Context, in *ImportStudentsRequest, opts ...grpc.CallOption) (*ImportStudentsResponse, error)
+	ImportGroupLeaders(ctx context.Context, in *ImportGroupLeadersRequest, opts ...grpc.CallOption) (*ImportGroupLeadersResponse, error)
 	FindGroups(ctx context.Context, in *FindGroupsRequest, opts ...grpc.CallOption) (*FindGroupsResponse, error)
 	GetGroup(ctx context.Context, in *GetGroupRequest, opts ...grpc.CallOption) (*GetGroupResponse, error)
 }
@@ -104,6 +105,15 @@ func (c *userServiceClient) ImportStudents(ctx context.Context, in *ImportStuden
 	return out, nil
 }
 
+func (c *userServiceClient) ImportGroupLeaders(ctx context.Context, in *ImportGroupLeadersRequest, opts ...grpc.CallOption) (*ImportGroupLeadersResponse, error) {
+	out := new(ImportGroupLeadersResponse)
+	err := c.cc.Invoke(ctx, "/UserService/ImportGroupLeaders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) FindGroups(ctx context.Context, in *FindGroupsRequest, opts ...grpc.CallOption) (*FindGroupsResponse, error) {
 	out := new(FindGroupsResponse)
 	err := c.cc.Invoke(ctx, "/UserService/FindGroups", in, out, opts...)
@@ -133,6 +143,7 @@ type UserServiceServer interface {
 	GetStudent(context.Context, *GetStudentRequest) (*GetStudentResponse, error)
 	FindStudents(context.Context, *FindStudentsRequest) (*FindStudentsResponse, error)
 	ImportStudents(context.Context, *ImportStudentsRequest) (*ImportStudentsResponse, error)
+	ImportGroupLeaders(context.Context, *ImportGroupLeadersRequest) (*ImportGroupLeadersResponse, error)
 	FindGroups(context.Context, *FindGroupsRequest) (*FindGroupsResponse, error)
 	GetGroup(context.Context, *GetGroupRequest) (*GetGroupResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -162,6 +173,9 @@ func (UnimplementedUserServiceServer) FindStudents(context.Context, *FindStudent
 }
 func (UnimplementedUserServiceServer) ImportStudents(context.Context, *ImportStudentsRequest) (*ImportStudentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImportStudents not implemented")
+}
+func (UnimplementedUserServiceServer) ImportGroupLeaders(context.Context, *ImportGroupLeadersRequest) (*ImportGroupLeadersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportGroupLeaders not implemented")
 }
 func (UnimplementedUserServiceServer) FindGroups(context.Context, *FindGroupsRequest) (*FindGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindGroups not implemented")
@@ -308,6 +322,24 @@ func _UserService_ImportStudents_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_ImportGroupLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportGroupLeadersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ImportGroupLeaders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserService/ImportGroupLeaders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ImportGroupLeaders(ctx, req.(*ImportGroupLeadersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_FindGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FindGroupsRequest)
 	if err := dec(in); err != nil {
@@ -378,6 +410,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ImportStudents",
 			Handler:    _UserService_ImportStudents_Handler,
+		},
+		{
+			MethodName: "ImportGroupLeaders",
+			Handler:    _UserService_ImportGroupLeaders_Handler,
 		},
 		{
 			MethodName: "FindGroups",
