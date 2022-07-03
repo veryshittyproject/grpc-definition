@@ -99,7 +99,7 @@ message FindStudentsResponse {
 message ImportStudentRow {
   string last_name = 1;
   string first_name = 2;
-  int64 telegram_id = 3;
+  string telegram_username = 3;
 }
 
 message ImportStudentsRequest {
